@@ -8,10 +8,14 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		libldap2-dev \
+		libmcrypt-dev \
 	; \
 	\
 	docker-php-ext-configure ldap --with-libdir=/lib/x86_64-linux-gnu; \
 	docker-php-ext-install ldap; \
+	\
+	pecl install mcrypt-1.0.1; \
+	docker-php-ext-enable mcrypt; \
 	\
 	apt-mark auto '.*' > /dev/null; \
 	apt-mark manual $savedAptMark; \
